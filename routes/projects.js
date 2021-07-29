@@ -7,7 +7,7 @@ const __dirname = dirname(__filename);
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../../projects/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../../portfolio/build', 'index.html'));
 });
 
 export default router;
