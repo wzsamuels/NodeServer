@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import fs from 'fs';
 
-import indexRouter from './routes/index.js';
+//import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import todoRouter from './routes/todo.js';
 import blogRouter from './routes/blog.js'
@@ -45,5 +45,9 @@ app.use('/users', usersRouter);
 app.use('/todo', todoRouter);
 app.use('/blog', blogRouter);
 app.use('/projects', projectsRouter);
+
+app.use(function (req, res, next) {
+  res.sendFile(__dirname + '/public/404.html');
+});
 
 export default app;
