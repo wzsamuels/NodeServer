@@ -8,9 +8,10 @@ import fs from 'fs';
 
 import blogRouter from './routes/blog.js'
 import projectsRouter from './routes/projects.js'
+import bookminsterRouter from './routes/bookminster.js'
 import cors from 'cors'
 import './db/blog.js'
-
+//import './db/bookminster.js'
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
@@ -35,9 +36,11 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, '../portfolio/build')));
 app.use('/blog', express.static(path.join(__dirname, '../blog/build')));
+app.use('/bookminster', express.static(path.join(__dirname, '../bookminster/build')));
 
 app.use('/', projectsRouter);
 app.use('/blog', blogRouter);
+app.use('/bookminster', bookminsterRouter);
 
 
 app.use(function (req, res, next) {
