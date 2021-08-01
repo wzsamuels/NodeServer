@@ -20,14 +20,13 @@ const Book = db.model('Book', BookSchema);
 
 Book.find((err, books) => {
   if(err) return console.error(err)
-  //if(books.length) return
+  if(books.length) return
 
-  let title = 'The Lord of the Rings';
-  getCover(title)
+  getCover('The Lord of the Rings')
     .then(url => {
       console.log(url);
       new Book({
-        title: title,
+        title: 'The Lord of the Rings',
         author: 'J.R.R. Tolkein',
         cover: url,
       }).save()
@@ -36,24 +35,22 @@ Book.find((err, books) => {
   //let cover;
   //coverPromise.then(data => cover);
   
-  title = 'Catcher in the Rye';
-  getCover(title)
+  getCover('Catcher in the Rye')
     .then(url => {
       console.log(url);
       new Book({
-        title: title,
+        title: 'Catcher in the Rye',
         author: 'J.D. Salinger',
         cover: url,
       }).save()
     })
     .catch(err => console.error(err));
-
-  title = 'A Scanner Darkly';
-  getCover(title)
+    
+  getCover('A Scanner Darkly')
     .then(url => {
       console.log(url);
       new Book({
-        title: title,
+        title:  'A Scanner Darkly',
         author: 'Philip K. Dick',
         cover: url,
       }).save()

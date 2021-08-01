@@ -2,7 +2,7 @@ import express from 'express';
 import path, { dirname } from 'path';
 import Book from '../db/bookminster.js'
 import { fileURLToPath } from 'url';
-//import getCover from '../lib/bookcover.js';
+import getCover from '../lib/bookcover.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,16 +24,20 @@ router.get('/api/list', (req, res) => {
 
 // Add a new book to the database and return it
 router.post("/api/add", (req, res) => {
-  //const cover = getCover(req.body.title);
-  const cover ="#";
-  Book.create({ title: req.body.title, author: req.body.author, cover: cover}, (err, book) => {
-    if (err) {
-      console.log("Something went wrong creating Book");
-    }
-    else {      
-      res.send(book.toJSON());
-    }
-  })
+  console.log(req.body.author);
+  getCover(req.body.title)
+    .then(url => {
+      console.log(url);
+      Book.create({ title: req.body.title, author: req.body.author, cover: url}, (err, book) => {
+        if (err) {
+          console.log("Something went wrong creating Book");
+        }
+        else {      
+          res.send(book.toJSON());
+        }
+      })
+    })
+    .catch(err => console.error(err));
 })
 
 router.delete("/api/delete:id", (req, res) => {
