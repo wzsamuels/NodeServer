@@ -26,9 +26,12 @@ router.get('/api/list', (req, res) => {
 router.post("/api/add", (req, res) => {
   console.log(req.body.author);
   getCover(req.body.title)
-    .then(url => {
-      console.log(url);
-      Book.create({ title: req.body.title, author: req.body.author, cover: url}, (err, book) => {
+    .then(data => {
+      console.log(data.cover);
+      console.log(data.summary);
+      console.log(data.published);
+      Book.create({ title: req.body.title, author: req.body.author, cover: data.cover,
+          summary: data.summary, published: data.published}, (err, book) => {
         if (err) {
           console.log("Something went wrong creating Book");
         }
