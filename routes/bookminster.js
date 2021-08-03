@@ -24,7 +24,8 @@ router.get('/api/list', (req, res) => {
 
 // Add a new book to the database and return it
 router.post("/api/add", (req, res) => {
-  console.log(req.body.author);
+  if(!req.body.author)
+    req.body.author = "Anonymous";
   getCover(req.body.title)
     .then(data => {
       console.log(data.cover);

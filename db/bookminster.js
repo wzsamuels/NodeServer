@@ -35,7 +35,6 @@ Book.find((err, books) => {
     author: 'J.D.  Salinger'}, {title: 'A Scanner Darkly', author: 'Philip K. Dick'}];
  
   series(fetchCover, bookQueue);
-
   
 })
 
