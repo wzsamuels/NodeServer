@@ -8,12 +8,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../../bookminster/build', 'index.html'));
-});
-
 // Get all the posts
-router.get('/api/list', (req, res) => {
+router.get('/list', (req, res) => {
   Book.find().exec(function (err, list_books) {
     if (err) {return next(err)} 
     else {
@@ -23,7 +19,7 @@ router.get('/api/list', (req, res) => {
   })
 
 // Add a new book to the database and return it
-router.post("/api/add", (req, res) => {
+router.post("/add", (req, res) => {
   if(!req.body.author)
     req.body.author = "Anonymous";
   getCover(req.body.title)
@@ -44,7 +40,7 @@ router.post("/api/add", (req, res) => {
     .catch(err => console.error(err));
 })
 
-router.delete("/api/delete:id", (req, res) => {
+router.delete("/delete:id", (req, res) => {
   Book.deleteOne({ _id: req.params['id'] }, (err, deleteResults) => {
     if (err) {
       console.log("Something went wrong deleting Book");

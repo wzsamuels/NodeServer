@@ -6,9 +6,8 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import fs from 'fs';
 
-import blogRouter from './routes/blog.js'
-import projectsRouter from './routes/projects.js'
-import bookminsterRouter from './routes/bookminster.js'
+import blogRouter from './routes/blog-api.js'
+import bookRouter from './routes/book-api.js'
 import cors from 'cors'
 import './db/blog.js'
 //import './db/bookminster.js'
@@ -35,12 +34,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, '../portfolio/build')));
-app.use('/blog', express.static(path.join(__dirname, '../blog/build')));
-app.use('/bookminster', express.static(path.join(__dirname, '../bookminster/build')));
 
-app.use('/', projectsRouter);
-app.use('/blog', blogRouter);
-app.use('/bookminster', bookminsterRouter);
+app.use('/api/book', bookRouter);
+app.use('/api/blog', blogRouter);
+
+app.get('/*', (req, res, next) => {
+  res.sendFile(path.join('/home/ubuntu/portfolio/build', 'index.html'));
+});
 
 
 app.use(function (req, res, next) {
