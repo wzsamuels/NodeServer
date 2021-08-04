@@ -19,7 +19,7 @@ router.get('/list', (req, res) => {
   })
 
 // Add a new book to the database and return it
-router.post("/add", (req, res) => {
+router.post("/data", (req, res) => {
   if(!req.body.author)
     req.body.author = "Anonymous";
   getCover(req.body.title)
@@ -27,17 +27,26 @@ router.post("/add", (req, res) => {
       console.log(data.cover);
       console.log(data.summary);
       console.log(data.published);
-      Book.create({ title: req.body.title, author: req.body.author, cover: data.cover,
-          summary: data.summary, published: data.published}, (err, book) => {
-        if (err) {
-          console.log("Something went wrong creating Book");
-        }
-        else {      
-          res.send(book.toJSON());
-        }
-      })
+      res.send(JSON.stringify(
+        {title: req.body.title , author: req.body.author, cover: data.cover, summary: data.summary,
+        published: data.published}));
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+      console.error(err)
+      // TODO: send error to client
+    });
+})
+
+router.post("/add", (req, res) => {
+  Book.create({ title: req.body.title, author: req.body.author, cover: req.body.cover,
+    summary: req.body.summary, published: req.body.published}, (err, book) => {
+    if (err) {
+      console.log("Something went wrong creating Book");
+    }
+    else {
+      res.send(book.toJSON());
+    }
+  })
 })
 
 router.delete("/delete:id", (req, res) => {
@@ -49,6 +58,18 @@ router.delete("/delete:id", (req, res) => {
       res.send(`Delete record ${deleteResults}`);
     }
   });
+})
+
+router.post('/update:id', (req,res) => {
+  Book.findByIdAndUpdate({_id: req.params['id']}, {title: req.body.title, author: req.body.author,
+    cover: req.body.cover, summary: req.body.summary, published: req.body.published}, (err, result) => {
+    if(err){
+      res.send(err)
+    }
+    else{
+      res.send(result)
+    }
+  })
 })
 
 export default router;
