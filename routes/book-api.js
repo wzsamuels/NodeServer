@@ -38,6 +38,8 @@ router.post("/data", (req, res) => {
 })
 
 router.post("/add", (req, res) => {
+  console.log(JSON.stringify({ title: req.body.title, author: req.body.author, cover: req.body.cover,
+    summary: req.body.summary, published: req.body.published}));
   Book.create({ title: req.body.title, author: req.body.author, cover: req.body.cover,
     summary: req.body.summary, published: req.body.published}, (err, book) => {
     if (err) {
